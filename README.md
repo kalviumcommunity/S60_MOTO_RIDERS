@@ -14,3 +14,5 @@
 - User Authentication
 
 - Discover by category
+
+Frontend deployed link : https://s60-moto-riders.netlify.app/
