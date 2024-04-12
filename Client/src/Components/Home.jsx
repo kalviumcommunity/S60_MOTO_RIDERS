@@ -1,7 +1,7 @@
 using_component
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../App.css'; 
+import '../App.css';
 
 import React from 'react';
 import Dummydata from './Dummydata';
@@ -15,7 +15,7 @@ const Home = () => {
       .get('http://localhost:4050/getUsers')
       .then((response) => setUsers(response.data))
       .catch((error) => console.error('Error fetching users:', error));
-  }, [ ]);
+  }, []);
 
   return (
     <div className="home-container">
