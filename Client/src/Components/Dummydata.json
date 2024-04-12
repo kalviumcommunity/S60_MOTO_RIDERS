@@ -1,0 +1,14 @@
+[
+    {
+        "id"         : "1",
+        "First_Name" : "Shiva Varma",
+        "Age"        : "18",
+        "Bike_Img"   : "https://imgs.search.brave.com/Sa_2MRy7iGfGWZF6ToYMIbghqSgmH5R34uanRkkI…"
+    },
+    {
+        "id"         : "2",
+        "First_Name" : "Rahul Varma",
+        "Age"        : "19",
+        "Bike_Img"   : "https://imgs.search.brave.com/Sa_2MRy7iGfGWZF6ToYMIbghqSgmH5R34uanRkkI…"
+    }
+]

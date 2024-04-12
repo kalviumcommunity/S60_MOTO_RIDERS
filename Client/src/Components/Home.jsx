@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css';
 
@@ -30,20 +30,21 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((User, index) => (
+            {users.map((user, index) => (
               <tr key={index}>
-                <td>{User.First_Name}</td>
-                <td>{User.Last_Name}</td>
-                <td>{User.Age}</td>
-                <td>{User.Region}</td>
-                <td>{User.city}</td>
-                <td>{User.Bike_Img}</td>
-                <td>{User.Likes}</td>
+                <td>{user.First_Name}</td>
+                <td>{user.Last_Name}</td>
+                <td>{user.Age}</td>
+                <td>{user.Region}</td>
+                <td>{user.city}</td>
+                <td>{user.Bike_Img}</td>
+                <td>{user.Likes}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      
     </div>
   );
 };
