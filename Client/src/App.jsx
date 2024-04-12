@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
 
 const App = () => {
+  console.log("here line 6 app.jsx")
   return (
     <BrowserRouter>
       <Routes>
