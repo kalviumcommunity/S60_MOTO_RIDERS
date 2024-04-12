@@ -1,6 +1,11 @@
+using_component
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../App.css'; 
+
+import React from 'react';
+import Dummydata from './Dummydata';
+main
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -16,6 +21,7 @@ const Home = () => {
     <div className="home-container">
       <h2>Welcome to the Moto Riders page</h2>
       <h3>Here you can see images and read bios about them</h3>
+    using_component
       <div className="data">
         <table className="table">
           <thead>
@@ -44,6 +50,19 @@ const Home = () => {
           </tbody>
         </table>
       </div>
+     {
+        Dummydata.map( Dummydata =>  {
+            return(
+                <div className='box' key={Dummydata.id}><br />
+                   <strong> {Dummydata.First_Name}</strong><br />
+                  <strong>{Dummydata.Age}</strong><br />
+                   {Dummydata.Bike_Img}
+
+                </div>
+            )
+        })
+     }
+     main
     </div>
   );
 };
