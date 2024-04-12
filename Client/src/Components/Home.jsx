@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../App.css'; 
+import '../App.css';
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +10,7 @@ const Home = () => {
       .get('http://localhost:4050/getUsers')
       .then((response) => setUsers(response.data))
       .catch((error) => console.error('Error fetching users:', error));
-  }, [ ]);
+  }, []);
 
   return (
     <div className="home-container">
