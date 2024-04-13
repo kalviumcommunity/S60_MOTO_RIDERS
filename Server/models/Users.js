@@ -5,8 +5,7 @@ const UserSchema = new mongoose.Schema({
     Age: Number,
     Region: String,
     city: String,
-    Bike_Img: String,
-    Likes: Number
+    Bike_Img: String
 })
 
 const UserModel = mongoose.model('Users', UserSchema, "Users");

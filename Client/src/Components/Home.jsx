@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import '../App.css';
 
@@ -15,7 +16,8 @@ const Home = () => {
   return (
     <div className="home-container">
       <h2>Welcome to the Moto Riders page</h2>
-      <h3>Here you can see images and read bios about them</h3>
+      <h3>Here you can see images and read bios about them.</h3>
+      <Link to="/form" className='add_button'>Add+</Link> 
       <div className="data">
         <table className="table">
           <thead>
@@ -26,7 +28,8 @@ const Home = () => {
               <th>Region</th>
               <th>City</th>
               <th>Bike Image Link</th>
-              <th>Likes</th>
+             
+              <th>Actions</th> 
             </tr>
           </thead>
           <tbody>
@@ -36,15 +39,17 @@ const Home = () => {
                 <td>{user.Last_Name}</td>
                 <td>{user.Age}</td>
                 <td>{user.Region}</td>
-                <td>{user.city}</td>
-                <td>{user.Bike_Img}</td>
-                <td>{user.Likes}</td>
+                <td>{user.City}</td> 
+                <td><img src={user.Bike_Img} alt="" className='image'/></td> 
+                <td>
+                  <button key={`update-${index}`}>Update</button> 
+                  <button key={`delete-${index}`}>Delete</button> 
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      
     </div>
   );
 };
