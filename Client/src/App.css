@@ -1,4 +1,5 @@
 .home-container {
+  position: relative; /* Make the container position relative */
   text-align: center;
   padding: 20px;
 }
@@ -33,4 +34,22 @@
 
 .table tr:hover {
   background-color: #ddd;
+}
+.image {
+  width: 100px;
+  height: 100px;
+}
+.add_button {
+  position: absolute; 
+  top: 20px; 
+  right: 20px; 
+  padding: 10px 20px;
+  background-color: rgb(26, 184, 26); 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.add_button:hover {
+  background-color: darkgreen; 
 }

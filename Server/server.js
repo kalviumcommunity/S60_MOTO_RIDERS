@@ -9,8 +9,8 @@ const PORT = 4050;
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
-app.use('/', route);
+app.use(cors());
+// app.use('/', route);
 
 // Routes
 app.get('/getUsers', async (req, res) => {
@@ -22,6 +22,13 @@ app.get('/getUsers', async (req, res) => {
   }
 });
 console.log('Here is testing console.');
+
+app.post('/form', (req, res) => {
+  console.log(req);
+  UserModel.create(req.body)
+    .then((Users) => res.json(Users))
+    .catch((err) => res.status(400).json('Error: ' + err));
+});
 
 // Database connection
 mongoose
