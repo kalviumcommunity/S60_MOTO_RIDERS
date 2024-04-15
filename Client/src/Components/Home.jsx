@@ -13,6 +13,14 @@ const Home = () => {
       .catch((error) => console.error('Error fetching users:', error));
   }, []);
 
+
+  const handleDelete = (id) => {
+    axios.delete('http://localhost:4050/deleteUser/'+id)
+    .then(res => {console.log(res)
+    window.location.reload()})
+    .catch((error) => console.error('Error Deleting users:', error));
+
+  }
   return (
     <div className="home-container">
       <h2>Welcome to the Moto Riders page</h2>
@@ -42,8 +50,8 @@ const Home = () => {
                 <td>{user.City}</td> 
                 <td><img src={user.Bike_Img} alt="" className='image'/></td> 
                 <td>
-                  <button key={`update-${index}`}>Update</button> 
-                  <button key={`delete-${index}`}>Delete</button> 
+                <Link to={`/update/${user._id}`}><button>Update</button></Link>
+                <button className='delete_btn' onClick={(e) => handleDelete(user._id)}>Delete</button>
                 </td>
               </tr>
             ))}
