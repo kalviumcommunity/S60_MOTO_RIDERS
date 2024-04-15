@@ -1,23 +1,39 @@
-const express = require('express');
-const mongoose = require('mongoose');
-
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const Users = require("./models/Users");
+const joi = require("joi");
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-app.get('/home', (req, res) => {
-  return res.json({ message: 'Route is working successfully' });
+
+const UserSchema = joi.object({
+  type: joi.string().required(),
+  about: joi.string().required()
 });
 
-app.post('/post', (req, res) => {
-  return res.json({ message: 'Your content is posted' });
-});
 
-app.put('/update', (req, res) => {
-  return res.json({ message: 'your content is updated' });
-});
+app.post("/user", async (req, res) => {
+  try {
+    
+    const { error } = UserSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
 
-app.delete('/delete', (req, res) => {
-  return res.json({ message: 'your content is deleted' });
+    const { type, about } = req.body;
+    const newUser = new Users({
+      type,
+      about
+    });
+
+    await newUser.save();
+    res.json({ message: "Data saved successfully!" });
+  } catch (err) {
+    console.error("Error in saving data:", err);
+    res.status(500).json({ error: "An error occurred" });
+  }
 });
 
 module.exports = app;
