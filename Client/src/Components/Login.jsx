@@ -16,7 +16,7 @@ const Login = () => {
         console.log(res);
         if (res.data.shouldLogin) {
           // Assuming you are setting a token cookie and storing user id in localStorage
-          document.cookie = `token=${res.data.token}; expires=Thu, 30 May 2999 12:00:00 UTC`;
+          // document.cookie = `token=${res.data.token}; expires=Thu, 30 May 2999 12:00:00 UTC`;
           localStorage.setItem('id', res.data.id);
           alert(res.data.message);
           setIsLoggedIn(res.data.shouldLogin);
@@ -31,7 +31,7 @@ const Login = () => {
 
   const handleLogout = () => {
     // Assuming you want to remove the token cookie and clear localStorage on logout
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    // document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     localStorage.removeItem('id');
     setIsLoggedIn(false);
   };
