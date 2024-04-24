@@ -1,15 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const UserModel = require('./models/Users');
-const route = require('./routes');
+// const crypto = require('crypto');
+// const jwt = require('jsonwebtoken');
+const Joi = require('joi');
+const { UserModel, SignupModel } = require('./models/Users');
 
 const app = express();
 const PORT = 4050;
 
 // Middleware
-app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
+app.use(express.json()); 
 
 
 // Routes
@@ -27,11 +34,9 @@ app.get('/getUsers/:id', (req, res) => {
   const id = req.params.id;
   console.log(id);
   UserModel.findById(id)
-    .then(user => res.json(user))
-    .catch(err => res.status(404).json('User not found'));
+    .then((user) => res.json(user))
+    .catch((err) => res.status(404).json('User not found'));
 });
-
-
 
 app.post('/form', (req, res) => {
   console.log(req);
@@ -40,21 +45,79 @@ app.post('/form', (req, res) => {
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-
-app.put("/updateUser/:id",(req,res)=>{
+app.put('/updateUser/:id', (req, res) => {
   const id = req.params.id;
-  UserModel.findByIdAndUpdate(id,req.body)
-  .then(user => res.json(user))
-  .catch(err => res.status(404).json('User not found'))
-})
+  UserModel.findByIdAndUpdate(id, req.body)
+    .then((user) => res.json(user))
+    .catch((err) => res.status(404).json('User not found'));
+});
 
-app.delete('/deleteUser/:id',(req, res)=>{
+app.delete('/deleteUser/:id', (req, res) => {
   const id = req.params.id;
-  UserModel.findByIdAndDelete(id,req.body)
-  .then(user => res.json(user))
-  .catch(err => res.status(404).json('User not found'))
-})
+  UserModel.findByIdAndDelete(id, req.body)
+    .then((user) => res.json(user))
+    .catch((err) => res.status(404).json('User not found'));
+});
 
+// Login Route
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await SignupModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'User is not registered' });
+    }
+    const hashedPassword = hashPassword(password);
+    if (hashedPassword !== user.password) {
+      return res.status(400).json({ message: 'Incorrect password' });
+    }
+    // const token = generateToken(user._id);
+    // return res.json({
+    //   shouldLogin: true,
+    //   message: 'Logged in successfully',
+    //   token: token,
+    //   id: user._id,
+    // });
+  } catch (error) {
+    console.error('Error in user login:', error);
+    return res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+// SignUp Route
+app.post('/signUp', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const emailPresent = await SignupModel.findOne({ email: email });
+    if (emailPresent) {
+      return res
+        .status(400)
+        .send({ error: 'User with this email already exists' });
+    }
+
+    const hashedPassword = hashPassword(password);
+    const newUser = new SignupModel({ name, email, password: hashedPassword });
+    const savedUser = await newUser.save();
+
+    res.json(savedUser);
+  } catch (error) {
+    console.error('Error in user signup:', error);
+    return res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+// Helper functions
+function hashPassword(password) {
+  return crypto.createHash('sha256').update(password).digest('hex');
+}
+
+// function generateToken(userId) {
+//   const token = jwt.sign({ userId }, 'your_secret_key', {
+//     expiresIn: '1h',
+//   });
+//   return token;
+// }
 
 // Database connection
 mongoose
