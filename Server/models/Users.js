@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
   Last_Name: String,
   Age: Number,
   Region: String,
-  city: String,
+  City: String,
   Bike_Img: String,
 });
 
