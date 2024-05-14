@@ -4,6 +4,7 @@ import Form from './Components/Form';
 import Update from './Components/Update';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
+import Filter from './Components/Filter';
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='*' element={<h1>Error 404</h1>} />
+        <Route path='/filter' element={<Filter />} />
       </Routes>
     </BrowserRouter>
   );

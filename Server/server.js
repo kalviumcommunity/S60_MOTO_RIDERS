@@ -10,11 +10,13 @@ const app = express();
 const PORT = 4050;
 
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-}));
-app.use(express.json()); 
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  })
+);
+app.use(express.json());
 
 // Routes
 app.get('/getUsers', async (req, res) => {
@@ -31,9 +33,19 @@ app.get('/getUsers/:id', async (req, res) => {
     const id = req.params.id;
     const user = await UserModel.findById(id);
     if (!user) {
-      return res.status(404).json('User not found');
+      return res.status(404).json({ error: 'User not found' });
     }
     res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/userdata/:city', async (req, res) => {
+  try {
+    const city = req.params.city;
+    const users = await UserModel.findOne({ City: city });
+    res.json(users);
   } catch (err) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -105,7 +117,9 @@ app.post('/signUp', async (req, res) => {
     const { name, email, password } = req.body;
     const emailPresent = await SignupModel.findOne({ email });
     if (emailPresent) {
-      return res.status(400).json({ error: 'User with this email already exists' });
+      return res
+        .status(400)
+        .json({ error: 'User with this email already exists' });
     }
     const hashedPassword = hashPassword(password);
     const newUser = new SignupModel({ name, email, password: hashedPassword });
@@ -130,14 +144,20 @@ function generateToken(userId) {
 }
 
 // Database connection
-mongoose.connect('mongodb+srv://shivavarmak:shiva123@moto-riders.guadwwt.mongodb.net/Moto-Riders?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('Database is connected');
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+mongoose
+  .connect(
+    'mongodb+srv://shivavarmak:shiva123@moto-riders.guadwwt.mongodb.net/Moto-Riders?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log('Database is connected');
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Database connection error:', error.message);
   });
-}).catch((error) => {
-  console.error('Database connection error:', error.message);
-});

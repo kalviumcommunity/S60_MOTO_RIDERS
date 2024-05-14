@@ -48,6 +48,9 @@ const Home = () => {
     <div className="home-container">
       <h2>Welcome to the Moto Riders page</h2>
       <h3>Here you can see images and read bios about them.</h3>
+      <Link to="/filter" className='h4'>
+                  <h4 className='option filteroption'>Filter</h4>
+      </Link>
       <Link to="/form" className="add_button">
         Add+
       </Link>
