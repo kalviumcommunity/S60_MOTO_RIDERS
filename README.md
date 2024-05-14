@@ -15,5 +15,5 @@
 
 - Discover by category
 
-Frontend deployed link : https://s60-moto-riders.netlify.app/
+Frontend deployed link : https://moto-riders.netlify.app/
 Backend deployed link: https://s60-moto-riders-2.onrender.com
