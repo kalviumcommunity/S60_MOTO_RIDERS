@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { UserModel, SignupModel } = require('./models/Users');
-
+const userjoi=require("./routes")
 const app = express();
 const PORT = 4050;
 
@@ -54,6 +54,7 @@ app.get('/userdata/:city', async (req, res) => {
 app.post('/form', async (req, res) => {
   try {
     const newUser = await UserModel.create(req.body);
+    userjoi.validate(newUser)
     res.json(newUser);
   } catch (err) {
     res.status(400).json('Error: ' + err);

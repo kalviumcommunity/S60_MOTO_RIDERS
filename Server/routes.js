@@ -8,6 +8,12 @@ app.use(express.json());
 app.use(cors());
 
 const UserSchema = joi.object({
-  type: joi.string().required(),
-  about: joi.string().required()
+  first_name: joi.string().required(),
+  last_name: joi.string().required(),
+  age: joi.string().required(),
+  region: joi.string().required(),
+  city: joi.string().required(),
+  bike_image_link: joi.string().required(),
 });
+
+module.exports=UserSchema
